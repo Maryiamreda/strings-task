@@ -1,14 +1,14 @@
 package org.example.task1;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class StringFunifier {
     private String boringString;
     private  List<Integer> start = new ArrayList<>();
     private  List<Integer> end = new ArrayList<>();
-    public void setBoringString(String s) {
-        this.boringString = s;
+    StringFunifier(String boringString , String start , String end){
+        this.boringString=boringString;
+        setStart(start);
+        setEnd(end);
     }
     public void setStart(String line) {
         String[] stringArray = line.split("\\s*,\\s*");
@@ -29,15 +29,14 @@ public class StringFunifier {
                 int x = start.get(index);
                 int y = end.get(index) + 1;
                 String sReverse = boringString.substring(x, y);
-                swap(sReverse);
+                reverse(sReverse);
                 i = y - 1;
                 continue;
             }
             System.out.print(boringString.charAt(i));
         }
     }
-
-    private void swap(String s) {
+    private void reverse(String s) {
         char[] ch = s.toCharArray();
         System.out.print("(");
         for (int i = ch.length - 1; i >= 0; i--) {
