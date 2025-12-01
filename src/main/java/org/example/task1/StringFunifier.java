@@ -28,28 +28,29 @@ public class StringFunifier {
     }
     public String getFunnyString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < boringString.length(); i++) {
+        for (int i = 0; i < boringString.length();) {
             if (start.contains(i)) {
                 int index = start.indexOf(i);
-                int x = start.get(index);
                 int y = end.get(index) + 1;
-                String sReverse = boringString.substring(x, y);
-                sb.append(reverse(sReverse));
-                i = y - 1;
-                continue;
+                String sReverse = boringString.substring(i, y);
+                sb.append("(")
+                        .append(reverse(sReverse))
+                        .append(")");
+                i = y ;
             }
-            sb.append(boringString.charAt(i));
+          else {
+                sb.append(boringString.charAt(i));
+                i++;
+            }
         }
         return sb.toString();
     }
 
     private String reverse(String s) {
         StringBuilder sb = new StringBuilder();
-        sb.append("(");
         for (int i = s.length() - 1; i >= 0; i--) {
             sb.append(s.charAt(i));
         }
-        sb.append(")");
         return sb.toString();
     }
 }
