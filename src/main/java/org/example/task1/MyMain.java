@@ -9,7 +9,9 @@ public class MyMain {
         String start=sc.nextLine();
         String end=sc.nextLine();
         StringFunifier funifier = new StringFunifier(s,start,end);
-        funifier.getFunnyString();
+        System.out.println(funifier.getFunnyString());
     }
 }
-
+//abbccCDdBCCcc
+//1, 5, 7, 11
+//3, 5, 10, 12
