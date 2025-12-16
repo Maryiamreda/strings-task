@@ -1,55 +1,49 @@
 package org.example.task1;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 public class StringFunifier {
-    private String boringString;
-    private List<Integer> start = new ArrayList<>();
-    private List<Integer> end = new ArrayList<>();
+    private final StringTransformer stringTransformer;
+    // constructor  setter
+    // no            no  +
+    // no            yes +
+    // yes           no  +
+    // yes           yes +
+    public StringFunifier(StringTransformer stringTransformer)  {
 
-    StringFunifier(String boringString, String start, String end) {
-        this.boringString = boringString;
-        setStart(start);
-        setEnd(end);
+        this.stringTransformer = stringTransformer;
     }
-
-    public void setStart(String line) {
-        String[] stringArray = line.split("\\s*,\\s*");
-        for (String s : stringArray) {
-            start.add(Integer.valueOf(s));
-        }
-    }
-    public void setEnd(String line) {
-        String[] stringArray = line.split("\\s*,\\s*");
-        for (String s : stringArray) {
-            end.add(Integer.valueOf(s));
-        }
-    }
-    public String getFunnyString() {
+    public String getFunnyString(String boringString, List<Integer> startRanges, List<Integer> endRanges, List<Operations> operationsList)  {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < boringString.length();) {
-            if (start.contains(i)) {
-                int index = start.indexOf(i);
-                int y = end.get(index) + 1;
-                String sReverse = boringString.substring(i, y);
-                sb.append("(")
-                        .append(reverse(sReverse))
-                        .append(")");
-                i = y ;
+        int rangeIndex = 0;
+        for (int i = 0; i < boringString.length(); ) {  //O(n)
+            if (rangeIndex >= startRanges.size()) {
+                sb.append(boringString, i, boringString.length());
+                break;
             }
-          else {
-                sb.append(boringString.charAt(i));
-                i++;
-            }
+            String noEditsSubString = boringString.substring(i, startRanges.get(rangeIndex));
+            sb.append(noEditsSubString);
+            String operationSubString = boringString.substring(startRanges.get(rangeIndex), endRanges.get(rangeIndex) + 1);
+            String editedSubstring = stringTransformer.tranformString(operationsList.get(rangeIndex), operationSubString);
+
+            sb.append("(").append(editedSubstring).append(")");
+            i = endRanges.get(rangeIndex) + 1;
+            rangeIndex++;
         }
         return sb.toString();
     }
 
-    private String reverse(String s) {
+    public String getFunRanges(String boringString, List<Integer> startRanges, List<Integer> endRanges) {
         StringBuilder sb = new StringBuilder();
-        for (int i = s.length() - 1; i >= 0; i--) {
-            sb.append(s.charAt(i));
+        int rangeIndex = 0;
+        for (int i = 0; i < boringString.length(); ) {
+            if (rangeIndex < startRanges.size() && startRanges.get(rangeIndex) == i) {  //O(1)
+                int endRange = endRanges.get(rangeIndex) + 1;
+                String sReverse = boringString.substring(i, endRange);
+                sb.append("(").append(sReverse).append(")");
+                i = endRange;
+                continue;
+            }
+            sb.append(boringString.charAt(i));
+            i++;
         }
         return sb.toString();
     }
