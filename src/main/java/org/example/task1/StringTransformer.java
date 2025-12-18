@@ -2,7 +2,6 @@ package org.example.task1;
 import java.util.Arrays;
 
 public class StringTransformer  {
-    public int x= 10;
     public StringTransformer() {
     }
     private String reverse(String s) {

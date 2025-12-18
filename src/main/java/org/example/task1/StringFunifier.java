@@ -2,11 +2,7 @@ package org.example.task1;
 import java.util.*;
 public class StringFunifier {
     private final StringTransformer stringTransformer;
-    // constructor  setter
-    // no            no  +
-    // no            yes +
-    // yes           no  +
-    // yes           yes +
+
     public StringFunifier(StringTransformer stringTransformer)  {
 
         this.stringTransformer = stringTransformer;

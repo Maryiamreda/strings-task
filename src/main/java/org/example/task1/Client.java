@@ -10,17 +10,20 @@ public class Client {
         // Initialize socket and input/output streams
         //Sending data(output) over the network (to the socket)
         Socket socket = new Socket(addr, port); //Connected
-        DataInputStream input = new DataInputStream(System.in);//it reads text typed by the user in the console
-        DataInputStream in=new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream()); //Sending data(output) over the network (to the socket)
-
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));//it reads text typed by the user in the console
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);//Sending data(output) over the network (to the socket)
         while (true) {
-            out.writeUTF(input.readLine()); //encodes a String into bytes in a special binary format and sends it through the socket.
-            out.writeUTF(input.readLine());
-            out.writeUTF(input.readLine());
-            out.writeUTF(input.readLine());
-            out.flush();
-            System.out.println(in.readUTF());
+            System.out.println("enter function name");
+            String fnName=input.readLine();
+            out.println(fnName); // Sends bytes through the socket output stream
+            out.println(input.readLine());
+            out.println(input.readLine());
+            out.println(input.readLine());
+            if (fnName.equals("getFunnyString")) {
+                out.println(input.readLine());
+            }
+            System.out.println(in.readLine());
         }
     }
 

@@ -12,7 +12,5 @@ public class TransformerFactory {
         return stringTransformer;
     }
 
-    public static StringTransformer getDependency(Class<StringTransformer> stringTransformerClass) {
-        return null;
-    }
+
 }
