@@ -16,8 +16,6 @@ CREATE table if not exist ranges{
   boring_string int,
   FOREIGN KEY (boring_string) REFERENCES fun_ranges(id)
 }
-
-
 CREATE table if not exist operation{
   id int auto_increment primary key ,
   name varchar(50) not null,

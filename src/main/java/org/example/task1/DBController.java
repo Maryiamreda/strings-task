@@ -3,23 +3,24 @@ package org.example.task1;
 import java.sql.*;
 import java.util.List;
 
-public class DBController implements DBInterface {
+public class DBController implements DBInterface{
     private final Connection connection;
-    private String url = "jdbc:mariadb://localhost:3306/funfunier?user=root&password=root";
 
     public DBController() throws SQLException {
         //jdbc builds communication between java and db
         //Establish a Connection
+        String url = "jdbc:mariadb://localhost:3306/funfunier?user=root&password=root";
         connection = DriverManager.getConnection(url);
         // Prepared and Callable Statement interfaces enable sending sql commands and receive data from your database.
     }
 
     @Override
-    public void insert(Object o) {
-    }
-
-    public static void b(Object k) {
-
+    public void insert(Object o)  {
+//        if (o.fName.equals("getFunnyString")) {
+//            addNewFunfierOp(o.boringString,o.funnyString,o.startRange,o.endRange,o.operations);
+//        } else if (o.fName.equals("getFunnyRanges")) {
+//            //addNewFunRangesOp
+//        }
     }
 
     @Override
@@ -27,7 +28,8 @@ public class DBController implements DBInterface {
         return null;
     }
 
-    void addNewFunfierOp(String boringString, String funnyString, List<Integer> startRanges, List<Integer> endRanges, List<Operations> operationsList) throws SQLException {
+
+    private void addNewFunfierOp(String boringString, String funnyString, List<Integer> startRanges, List<Integer> endRanges, List<Operations> operationsList) throws SQLException {
         //pre-compiled SQL statemen
         PreparedStatement prepare_statement = connection.prepareStatement("INSERT INTO stringfunifier (boring_string,funny_string) VALUES (?,?)");
         prepare_statement.setString(1, boringString);

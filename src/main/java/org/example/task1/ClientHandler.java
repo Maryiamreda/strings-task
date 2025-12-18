@@ -48,7 +48,15 @@ public class ClientHandler extends Thread {
                 } else {
                     funnyString = sf.getFunRanges(boringString, startRanges, endRanges);
                 }
-                db.addNewFunfierOp(boringString, funnyString, startRanges, endRanges, operationsList);
+//                db.addNewFunfierOp(boringString, funnyString, startRanges, endRanges, operationsList);
+                StringFunfierEntity rd=new StringFunfierEntity();
+                rd.setFName(fnName);
+                rd.setBoringString(boringString);
+                rd.setFunnyString(funnyString);
+                rd.setStartRange(startRanges);
+                rd.setEndRange(endRanges);
+                rd.setOperations(operationsList);
+                db.insert(rd);
                 out.println(funnyString);
                 out.flush();
             }
