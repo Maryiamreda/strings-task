@@ -13,7 +13,6 @@ public class Client2 {
         DataInputStream input = new DataInputStream(System.in);//it reads text typed by the user in the console
         DataInputStream in=new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream()); //Sending data(output) over the network (to the socket)
-
         while (true) {
             out.writeUTF(input.readLine()); //encodes a String into bytes in a special binary format and sends it through the socket.
             out.writeUTF(input.readLine());
@@ -22,7 +21,6 @@ public class Client2 {
             out.flush();
             System.out.println(in.readUTF());
         }
-
     }
 
     public static void main(String[] args) throws IOException {

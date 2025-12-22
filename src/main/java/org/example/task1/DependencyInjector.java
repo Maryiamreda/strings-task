@@ -18,7 +18,7 @@ public class DependencyInjector {
         classFactoryMap.put(DBController.class, DBFactory::new);
     }
 
-    public DependencyInjector() { }
+    public DependencyInjector() {}
 
     public static <T> T getDependency(Class<?> myClass) throws SQLException {
         Factory factory = classFactoryMap.get(myClass).get();

@@ -10,7 +10,7 @@ public class Server {
             //Starts server and Wait for a client connection
             while (true) {
                 Socket s = serverSocket.accept();
-                Thread client = new ClientHandler(s);  //send the socket to clienthandler
+                Thread client = new ClientHandler(s);
                 client.start(); //begin a new ClientHandler thread of execution
             }
         } catch (IOException e) {

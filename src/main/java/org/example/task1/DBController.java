@@ -1,9 +1,11 @@
 package org.example.task1;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.*;
-import java.util.List;
 
-public class DBController implements DBInterface{
+
+public class DBController implements DBInterface {
     private final Connection connection;
 
     public DBController() throws SQLException {
@@ -15,53 +17,58 @@ public class DBController implements DBInterface{
     }
 
     @Override
-    public void insert(Object o)  {
-//        if (o.fName.equals("getFunnyString")) {
-//            addNewFunfierOp(o.boringString,o.funnyString,o.startRange,o.endRange,o.operations);
-//        } else if (o.fName.equals("getFunnyRanges")) {
-//            //addNewFunRangesOp
-//        }
+    public int insert(Object myobject) {
+        //INSERT INTO stringfunifier (boring_string,funny_string) VALUES (?,?)
+        StringBuilder myQuery = new StringBuilder();
+        StringBuilder fieldNames = new StringBuilder();
+        StringBuilder insertedValues = new StringBuilder();
+        myQuery.append("INSERT INTO " + myobject.getClass().getSimpleName() + " (");
+        int id =-1;
+        try {
+
+            Field[] fields = myobject.getClass().getDeclaredFields();
+            Method[] method=myobject.getClass().getDeclaredMethods();
+            System.out.println("after");
+            //column names
+            for (int i = 0; i < fields.length; ) {
+                fieldNames.append(fields[i].getName());
+                System.out.println(fields[i].getName());
+                insertedValues.append('"');
+                insertedValues.append(method[i].invoke(myobject));
+                System.out.println("method is " + method[i].getName());
+                insertedValues.append('"');
+                if (i++ == fields.length - 1) {
+                    fieldNames.append(") VALUES (");
+                    insertedValues.append(") ");
+                } else {
+                    fieldNames.append(",");
+                    insertedValues.append(",");
+                }
+            }
+            myQuery.append(fieldNames).append(insertedValues);
+             System.out.println(myQuery);
+            Statement statement= connection.createStatement();
+
+            statement.executeQuery(String.valueOf(myQuery));
+            ResultSet result = statement.executeQuery("SELECT LAST_INSERT_ID()");
+            if (result.next()) { //return one row with one value
+                System.out.println(result);
+                id = result.getInt(1); //integer value from first column
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     @Override
-    public Object get(Long id) {
-        return null;
+    public Object get(Object myobject) throws SQLException {
+        //SELECT * FROM FunRanges;
+        Field[] fields = myobject.getClass().getDeclaredFields();
+        StringBuilder myQuery=new StringBuilder("SELECT * FROM "+myobject.getClass().getSimpleName()+" WHERE id =");
+         myQuery.append(fields[0]);
+        Statement statement= connection.createStatement();
+        return statement.executeQuery(String.valueOf(myQuery));
     }
-
-
-    private void addNewFunfierOp(String boringString, String funnyString, List<Integer> startRanges, List<Integer> endRanges, List<Operations> operationsList) throws SQLException {
-        //pre-compiled SQL statemen
-        PreparedStatement prepare_statement = connection.prepareStatement("INSERT INTO stringfunifier (boring_string,funny_string) VALUES (?,?)");
-        prepare_statement.setString(1, boringString);
-        prepare_statement.setString(2, funnyString);
-        prepare_statement.executeUpdate();
-        Statement st = connection.createStatement();
-        ResultSet result = st.executeQuery("SELECT LAST_INSERT_ID()");
-        int id = 0;
-        if (result.next()) { //return one row with one value
-            id = result.getInt(1); //integer value from first column
-        }
-        for (int i = 0; i < startRanges.size(); i++) {
-            String op = (operationsList != null) ? String.valueOf(operationsList.get(i)) : "NONE";
-            addNewOperation(op, startRanges.get(i), endRanges.get(i), id);
-        }
-    }
-
-    private void addNewOperation(String opName, int start_range, int end_range, int parent_log) throws SQLException {
-        String q = "INSERT INTO operation (name, start_range, end_range, boring_string) VALUES (?, ?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(q); // Dynamic sql -- better for SQL injection
-        ps.setString(1, opName);
-        ps.setInt(2, start_range);
-        ps.setInt(3, end_range);
-        ps.setInt(4, parent_log);
-        ps.executeUpdate();
-    }
-
-//            dbController.addNewOperation(
-//                    String.valueOf(operationsList.get(rangeIndex)),
-//                    operationSubString,
-//                    editedSubstring,
-//                    startRanges.get(rangeIndex),
-//                    endRanges.get(rangeIndex),
-//                    id);
 }

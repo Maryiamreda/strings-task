@@ -1,5 +1,11 @@
 package org.example.task1;
 
+
+import org.example.task1.entity.FunRanges;
+import org.example.task1.entity.Funifier;
+import org.example.task1.entity.Operation;
+import org.example.task1.entity.Ranges;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,27 +43,43 @@ public class ClientHandler extends Thread {
         ) {
             while (true) {
                 String fnName = in.readLine();
-                String boringString = in.readLine();
-                List<Integer> startRanges = transferStringToList(in.readLine());
-                List<Integer> endRanges = transferStringToList(in.readLine());
-                String funnyString;
-                List<Operations> operationsList = null;
                 if (fnName.equals("getFunnyString")) {
-                    operationsList = stringsToEnum(in.readLine());
-                    funnyString = sf.getFunnyString(boringString, startRanges, endRanges, operationsList);
-                } else {
-                    funnyString = sf.getFunRanges(boringString, startRanges, endRanges);
+                    String boringString = in.readLine();
+                    List<Integer> startRanges = transferStringToList(in.readLine());
+                    List<Integer> endRanges = transferStringToList(in.readLine());
+                    List<Operations> operationsList = stringsToEnum(in.readLine());
+                    String funnyString = sf.getFunnyString(boringString, startRanges, endRanges, operationsList);
+                    Funifier funifier = new Funifier();
+                    funifier.setBoring_string(boringString);
+                    funifier.setFunny_string(funnyString);
+                    int id = db.insert(funifier);
+                    Operation op = new Operation();
+                    for (int i = 0; i < startRanges.size(); i++) {
+                        op.setStart_range(startRanges.get(i));
+                        op.setEnd_range(endRanges.get(i));
+                        op.setOperation_name(operationsList.get(i));
+                        op.setBoring_string(id);
+                        db.insert(op);
+                    }
+                    out.println(funnyString);
+                } else if (fnName.equals("getFunRanges")) {
+                    String boringString = in.readLine();
+                    List<Integer> startRanges = transferStringToList(in.readLine());
+                    List<Integer> endRanges = transferStringToList(in.readLine());
+                    String funnyString = sf.getFunRanges(boringString, startRanges, endRanges);
+                    FunRanges funRanges = new FunRanges();
+                    funRanges.setBoring_string(boringString);
+                    funRanges.setFunny_string(funnyString);
+                    int id = db.insert(funRanges);
+                    Ranges range = new Ranges();
+                    for (int i = 0; i < startRanges.size(); i++) {
+                        range.setStart_range(startRanges.get(i));
+                        range.setEnd_range(endRanges.get(i));
+                        range.setBoring_string(id);
+                        db.insert(range);
+                    }
+                    out.println(funnyString);
                 }
-//                db.addNewFunfierOp(boringString, funnyString, startRanges, endRanges, operationsList);
-                StringFunfierEntity rd=new StringFunfierEntity();
-                rd.setFName(fnName);
-                rd.setBoringString(boringString);
-                rd.setFunnyString(funnyString);
-                rd.setStartRange(startRanges);
-                rd.setEndRange(endRanges);
-                rd.setOperations(operationsList);
-                db.insert(rd);
-                out.println(funnyString);
                 out.flush();
             }
         } catch (Exception e) {
