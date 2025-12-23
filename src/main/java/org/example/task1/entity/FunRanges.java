@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FunRanges {
+    private int id ;
     private String boring_string;
     private String funny_string;
 }

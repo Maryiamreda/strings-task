@@ -17,7 +17,6 @@ public class DependencyInjector {
         classFactoryMap.put(StringFunifier.class, FunfierFactory::new);
         classFactoryMap.put(DBController.class, DBFactory::new);
     }
-
     public DependencyInjector() {}
 
     public static <T> T getDependency(Class<?> myClass) throws SQLException {
