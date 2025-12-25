@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class DBFactory implements Factory<DBController>{
     private static DBController dbController;
-    public   DBController createInstance() throws SQLException {
+    public DBController createInstance() throws SQLException {
         if (dbController == null) {
             dbController = new DBController();
         }

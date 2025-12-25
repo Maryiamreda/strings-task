@@ -1,8 +1,8 @@
 package org.example.task1;
 
-import org.example.task1.factory.DBFactory;
-import org.example.task1.factory.Factory;
-import org.example.task1.factory.FunfierFactory;
+import org.example.task1.ScannerClient.ScannerClientFunnyString;
+import org.example.task1.SocketClient.SocketClientFunnyString;
+import org.example.task1.factory.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -16,6 +16,8 @@ public class DependencyInjector {
     static {
         classFactoryMap.put(StringFunifier.class, FunfierFactory::new);
         classFactoryMap.put(DBController.class, DBFactory::new);
+        classFactoryMap.put(SocketClientFunnyString.class, FunnyStringSocketFactory::new);
+        classFactoryMap.put(ScannerClientFunnyString.class, ScannerFunnyStringFactory::new);
     }
     public DependencyInjector() {}
 

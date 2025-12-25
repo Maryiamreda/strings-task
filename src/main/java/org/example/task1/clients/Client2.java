@@ -1,11 +1,12 @@
-package org.example.task1;
+package org.example.task1.clients;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
-public class Client {
+public class Client2 {
     Socket socket;
-    public Client(String addr, int port) throws IOException {
+    public Client2(String addr, int port) throws IOException {
         // Establish a connection
         // Initialize socket and input/output streams
         //Sending data(output) over the network (to the socket)
@@ -20,7 +21,7 @@ public class Client {
             out.println(input.readLine());
             out.println(input.readLine());
             out.println(input.readLine());
-            if (fnName.equals("getFunnyString")) {
+            if (fnName.equals("FUNNY_STRING")) {
                 out.println(input.readLine());
             }
             System.out.println(in.readLine());

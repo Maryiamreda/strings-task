@@ -40,12 +40,10 @@ public class DBController implements DBInterface {
                 insertedValues.append(") ");
             }
             myQuery.append(fieldNames).append(insertedValues);
-            System.out.println(myQuery);
             Statement statement = connection.createStatement();
             statement.executeQuery(String.valueOf(myQuery));
             ResultSet result = statement.executeQuery("SELECT LAST_INSERT_ID()");
             if (result.next()) { //return one row with one value
-                System.out.println(result);
                 id = result.getInt(1); //integer value from first column
             }
         } catch (Exception e) {
@@ -64,7 +62,7 @@ public class DBController implements DBInterface {
             myId.setAccessible(true);
             StringBuilder myQuery = new StringBuilder("SELECT * FROM " + myobject.getClass().getSimpleName() + " WHERE id =" + myId.get(myobject));
             Statement statement = connection.createStatement();
-            System.out.println(myQuery);
+
             ResultSet resultSet = statement.executeQuery(String.valueOf(myQuery));
             Field[] fields = myobject.getClass().getDeclaredFields();
             while (resultSet.next()) {

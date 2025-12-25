@@ -1,8 +1,6 @@
 package org.example.task1.factory;
 
-import org.example.task1.StringTransformer;
-
-import java.sql.SQLException;
+import org.example.task1.Helpers.StringTransformer;
 
 public class TransformerFactory  {
     private static StringTransformer stringTransformer;

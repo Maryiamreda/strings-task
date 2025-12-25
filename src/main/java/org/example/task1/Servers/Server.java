@@ -1,4 +1,6 @@
-package org.example.task1;
+package org.example.task1.Servers;
+
+import org.example.task1.ClientHandler;
 
 import java.net.*;
 import java.io.*;
@@ -9,7 +11,7 @@ public class Server {
             serverSocket = new ServerSocket(port);
             //Starts server and Wait for a client connection
             while (true) {
-                Socket s = serverSocket.accept();
+                Socket s = serverSocket.accept(); //this is blocking
                 Thread client = new ClientHandler(s);
                 client.start(); //begin a new ClientHandler thread of execution
             }

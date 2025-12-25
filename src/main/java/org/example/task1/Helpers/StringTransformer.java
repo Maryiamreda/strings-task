@@ -1,9 +1,13 @@
-package org.example.task1;
+package org.example.task1.Helpers;
+
+import org.example.task1.enums.Operations;
+
 import java.util.Arrays;
 
-public class StringTransformer  {
+public class StringTransformer {
     public StringTransformer() {
     }
+
     private String reverse(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = s.length() - 1; i >= 0; i--) {
@@ -11,12 +15,15 @@ public class StringTransformer  {
         }
         return sb.toString();
     }
+
     private String upperCase(String s) {
         return s.toUpperCase();
     }
+
     private String lowerCase(String s) {
         return s.toLowerCase();
     }
+
     private String compression(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -37,7 +44,8 @@ public class StringTransformer  {
         Arrays.sort(charArray);
         return new String(charArray);
     }
-  public String tranformString(Operations operation, String subString) {
+
+    public String tranformString(Operations operation, String subString) {
         return switch (operation) {
             case REVERSE -> reverse(subString);
             case UPPERCASE -> upperCase(subString);

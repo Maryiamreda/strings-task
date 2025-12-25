@@ -1,9 +1,8 @@
 package org.example.task1.entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.task1.Operations;
+import org.example.task1.enums.Operations;
 
 @Getter
 @Setter

@@ -1,4 +1,6 @@
-package org.example.task1;
+package org.example.task1.Utilities;
+
+import org.example.task1.enums.Operations;
 
 import java.util.ArrayList;
 import java.util.List;

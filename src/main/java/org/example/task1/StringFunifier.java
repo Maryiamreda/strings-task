@@ -1,27 +1,30 @@
 package org.example.task1;
+import org.example.task1.Helpers.StringTransformer;
+import org.example.task1.mapper.FunnyStringRequest;
+
 import java.util.*;
 public class StringFunifier {
     private final StringTransformer stringTransformer;
 
     public StringFunifier(StringTransformer stringTransformer)  {
-
         this.stringTransformer = stringTransformer;
     }
-    public String getFunnyString(String boringString, List<Integer> startRanges, List<Integer> endRanges, List<Operations> operationsList)  {
+    public String getFunnyString(FunnyStringRequest request)  {
         StringBuilder sb = new StringBuilder();
+        String boringString=request.getBoringString();
         int rangeIndex = 0;
         for (int i = 0; i < boringString.length(); ) {  //O(n)
-            if (rangeIndex >= startRanges.size()) {
+            if (rangeIndex >= request.getStartRanges().size()) {
                 sb.append(boringString, i, boringString.length());
                 break;
             }
-            String noEditsSubString = boringString.substring(i, startRanges.get(rangeIndex));
+            String noEditsSubString = boringString.substring(i, request.getStartRanges().get(rangeIndex));
             sb.append(noEditsSubString);
-            String operationSubString = boringString.substring(startRanges.get(rangeIndex), endRanges.get(rangeIndex) + 1);
-            String editedSubstring = stringTransformer.tranformString(operationsList.get(rangeIndex), operationSubString);
+            String operationSubString = boringString.substring(request.getStartRanges().get(rangeIndex), request.getEndRanges().get(rangeIndex) + 1);
+            String editedSubstring = stringTransformer.tranformString(request.getOperationsList().get(rangeIndex), operationSubString);
 
             sb.append("(").append(editedSubstring).append(")");
-            i = endRanges.get(rangeIndex) + 1;
+            i = request.getEndRanges().get(rangeIndex) + 1;
             rangeIndex++;
         }
         return sb.toString();
