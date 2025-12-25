@@ -1,6 +1,7 @@
 package org.example.task1;
 
 import org.example.task1.SocketClient.SocketClientFunnyString;
+import org.example.task1.SocketClient.SocketClientInputToFunctionalityMapper;
 import org.example.task1.enums.Function;
 
 import java.io.BufferedReader;
@@ -9,19 +10,21 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.example.task1.DependencyInjector.getDependency;
 
 
 public class ClientHandler extends Thread {
     private final Socket clientSocket;
-public static final SocketClientFunnyString socketClientFunnyString;
+    public static List<SocketClientInputToFunctionalityMapper> socketClientInputToFunctionalityMappers;
+
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
     }
     static {
         try {
-            socketClientFunnyString=getDependency(SocketClientFunnyString.class);
+            socketClientInputToFunctionalityMappers = getDependency(SocketClientInputToFunctionalityMapper.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -32,9 +35,11 @@ public static final SocketClientFunnyString socketClientFunnyString;
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
             while (true) {
                 String fnName = in.readLine();
-                switch (Function.valueOf(fnName)) {
-                    case FUNNY_STRING -> socketClientFunnyString.handleSocketOperation(in,out);
-                }
+                socketClientInputToFunctionalityMappers.forEach(mapper -> {
+                  if (mapper.isFunctionalitySupported(fnName)) {
+                      mapper.handleSocketOperation(in, out);
+                  }
+                })
 
 //                else if (fnName.equals("getFunRanges")) {
 //                    String boringString = in.readLine();

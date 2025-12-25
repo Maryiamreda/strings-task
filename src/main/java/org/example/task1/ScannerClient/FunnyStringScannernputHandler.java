@@ -9,11 +9,5 @@ import static org.example.task1.Utilities.Transform.transferStringToList;
 import static org.example.task1.mapper.FunnyStringMapper.toRequest;
 
 public class FunnyStringScannernputHandler {
-    public static FunnyStringRequest mapInputToFunnyStringRequest(Scanner scanner) {
-        String boringString = scanner.nextLine();
-        List<Integer> startRanges = transferStringToList(scanner.nextLine());
-        List<Integer> endRanges = transferStringToList(scanner.nextLine());
-        List<Operations> operationsList = stringsToEnum(scanner.nextLine());
-        return toRequest(boringString, startRanges, endRanges, operationsList);
-    }
+
 }

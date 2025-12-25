@@ -13,11 +13,5 @@ import static org.example.task1.mapper.FunnyStringMapper.toRequest;
 
 
 public class FunnyStringBufferReaderInputHandler {
-    public static FunnyStringRequest mapInputToFunnyStringRequest(BufferedReader in) throws IOException {
-        String boringString = in.readLine();
-        List<Integer> startRanges = transferStringToList(in.readLine());
-        List<Integer> endRanges = transferStringToList(in.readLine());
-        List<Operations> operationsList = stringsToEnum(in.readLine());
-        return toRequest(boringString,startRanges,endRanges,operationsList);
-    }
+
  }

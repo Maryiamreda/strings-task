@@ -1,5 +1,5 @@
 package org.example.task1.ScannerClient;
-import static org.example.task1.ScannerClient.FunnyStringScannernputHandler.mapInputToFunnyStringRequest;
+import static org.example.task1.Utilities.InputHandler.mapInputToFunnyStringRequest;
 
 import org.example.task1.FunnyStringService;
 import org.example.task1.mapper.FunnyStringRequest;

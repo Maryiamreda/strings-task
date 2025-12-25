@@ -15,7 +15,8 @@ public class Server {
                 Thread client = new ClientHandler(s);
                 client.start(); //begin a new ClientHandler thread of execution
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             serverSocket.close();
         }
     }

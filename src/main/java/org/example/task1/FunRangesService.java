@@ -22,7 +22,6 @@ public class FunRangesService  {
         }
     }
 
-
     public String execute(String boringString, List<Integer> startRanges, List<Integer> endRanges) {
      String funnyRange=   sf.getFunRanges(boringString, startRanges, endRanges);
         FunRanges funRanges = new FunRanges();

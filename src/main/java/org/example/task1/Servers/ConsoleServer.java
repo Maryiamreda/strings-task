@@ -8,10 +8,9 @@ import java.util.Scanner;
 
 import static org.example.task1.DependencyInjector.getDependency;
 
-public class ConsoleServer {
+public class ConsoleServer{
     private static final ScannerClientFunnyString scannerClient;
     private static final Scanner scanner;
-
     static {
         try {
             scannerClient = getDependency(ScannerClientFunnyString.class);
